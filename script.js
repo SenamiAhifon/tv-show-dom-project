@@ -1,12 +1,14 @@
 //You can edit ALL of the code here
 function setup() {
   const allEpisodes = getAllEpisodes();
-  makePageForEpisodes(allEpisodes);
+  makePageForEpisodes(allEpisodes,allEpisodes.length);
 }
-
+// This function format season and episode numbers
 const formatTitleNumbers = (number) => {
   return number < 10 ? `0${number}` : `${number}`;
 }
+
+//This function creates  container and append images and paragraphs to the container
 function createEpisodeContainer (episode){
   const episodesContainer = document.createElement("div");
   const movieTitle = document.createElement("p");
@@ -25,6 +27,7 @@ function createEpisodeContainer (episode){
   return episodesContainer;
 }
 
+//Live search input, case sensitive, displays summary or episode that contains the search term
 
 const searchInput = document.getElementById("searchInput");
 searchInput.addEventListener("input", (e) => {
@@ -33,28 +36,51 @@ const filterEpisodeList = episodeLists.filter((episode) => {
 return episode.name.toLowerCase().includes(e.target.value.toLowerCase()) || episode.summary.toLowerCase().includes(e.target.value.toLowerCase());
 });
 
-makePageForEpisodes(filterEpisodeList);
+
+makePageForEpisodes(filterEpisodeList,episodeLists.length);
+
 })
 
+const selectEpisode = document.getElementById("selectEpisode");
 
 
-function makePageForEpisodes(episodeList) {
+
+
+//Adding episode selector
+/* const selectEpisode = document.getElementById("selectEpisode");
+selectEpisode.addEventListener("select", (e) => {
+const theListOfEpisodes = getAllEpisodes();
+const filterTheEpisodeList = theListOfEpisodes.filter((episode) => {
+  return episode.name.toLowerCase().includes(e.target.value.toLowerCase()) ||
+    episode.summary.toLowerCase().includes(e.target.value.toLowerCase())
+});
+  makePageForEpisodes(filterTheEpisodeList);
+})
+ */
+
+//adding episode selector
+//const selectEpisode = document.getElementById("selectEpisode");
+
+
+
+
+
+
+
+
+function makePageForEpisodes(episodeList, displayEpisodes) {
+  console.log(displayEpisodes);
   const rootElem = document.getElementById("root");
   //rootElem.textContent = `Got ${episodeList.length} episode(s)`;
   rootElem.innerHTML= "";
-  episodeList.forEach((episode) => {
-  
+const displayingEpisodes = document.createElement("p");
+displayingEpisodes.innerText = `displaying ${episodeList.length} / ${displayEpisodes} `
+rootElem.appendChild(displayingEpisodes);
+
+episodeList.forEach((episode) => {
 const episodeContainer = createEpisodeContainer(episode);
-
-
-  rootElem.appendChild(episodeContainer);
- 
+rootElem.appendChild(episodeContainer);
   })
-
-  
-
-
-  
 
 }
 
